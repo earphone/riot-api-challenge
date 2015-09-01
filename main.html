@@ -10182,6 +10182,17 @@
             1907409650, 
             1907409686
             ];
+            
+            var valueHolder = document.getElementById('valueHolder');
+            var result = {"0":{"test":1},"1":{"test":2},"2":{"test":3}};
+            
+            //convert raw JSON object to string
+            var resultString = JSON.stringify(result,null,2);
+            
+            //converts string to JSON object, this is what you need to use to convert the result of this page
+            var obj = JSON.parse(resultString);
+            document.getElementById("resultHolder").innerHTML = "<p>Example</p><br>"+resultString +" "+obj[1]["test"];
+
         </script>
     </body>
 </html>
