@@ -7,7 +7,8 @@
 	            font-family: Arial, Helvetica, sans-serif;
 	            font-size: xx-large;
             	font-weight: bold;
-            	background-color: #E3F0FB;
+            	background: "Images\deadpool.jpg";
+            	/*background-color: #E3F0FB;*/
             	border-radius: 4px;
             	padding: 10px;
             	text-align: center;
@@ -16,14 +17,14 @@
             	border-radius: 4px;
             	border: thin solid #FF0000;
             	padding: 5px;
-            	background-color: #00FF00;
+            	background-color: #81DAF5;
+            	opacity: 50%;
             	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             	font-weight: bold;
             	color: #663300;
             	height: 250px;
             	width: 402px;
             }
-            
             .buttonStyle:hover {
             	border: thin solid #FFCC00;
             	background-color: #FCF9D6;
@@ -37,6 +38,42 @@
             	cursor: pointer;
             }
             
+            .buttonRerollStyle {
+            	border-radius: 4px;
+            	border: thin solid #FF0000;
+            	padding: 5px;
+            	background-color: #81DAF5;
+            	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            	font-weight: bold;
+            	color: #663300;
+            	height: 52px;
+            	width: 159px;
+            }
+            .buttonRerollStyle:hover {
+            	border: thin solid #FFCC00;
+            	background-color: #FCF9D6;
+            	color: #996633;
+            	cursor: pointer;
+            }
+            
+            .buttonNexusStyle {
+            	border-radius: 4px;
+            	border: thin solid #FF0000;
+            	padding: 5px;
+            	background-color: #81DAF5;
+            	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            	font-weight: bold;
+            	color: #663300;
+            	height: 460px;
+            	width: 460px;
+            }
+            .buttonNexusStyle:hover {
+            	border: thin solid #FFCC00;
+            	background-color: #FCF9D6;
+            	color: #996633;
+            	cursor: pointer;
+            }
+            
         </style>
 
     </head>
@@ -45,6 +82,8 @@
     <body>
         <div id="mainContent">
             <p id="helloText">Bilgewater Butts</p>
+            <p id="countText">0</p>
+            <p id="randomNumber">0</p>
             <!--<button id="clickButton" class="buttonStyle"><img src="Images\ironback.png" alt="Ironback"/></button>-->
             <p>
                 <button id="ironbackpix" class="buttonStyle"><img src="Images\ironback.png" alt="Ironback"/></button>
@@ -55,28 +94,53 @@
                 <button id="razorfinpix" class="buttonStyle"><img src="Images\razorfin.png" alt="Razorfin"/>
             </p>
         </div>
+        <div id="mainContent">
+            <p>
+                <button id="redpix" class="buttonNexusStyle"><img src="Images\redNexus.png" alt="Red Nexus"/></button>
+                <button id="bluepix" class="buttonNexusStyle"><img src="Images\blueNexus.png" alt="Blue Nexus"/></button>
+            </p>
+        </div>
+        <div id="mainContent">
+            <p>
+                <button id="reroll" class="buttonRerollStyle"><img src="Images\reroll.jpg" alt="Reroll"/></button>
+            </p>
+        </div>
         
         <!-- The following are the scripts used to change things for each minion-->
         <script> 
-            //var myButton = document.getElementById("clickButton");
+            // Variables for html elements
             var myText = document.getElementById("helloText");
+            var myCount = document.getElementById("countText");
+            var randNum = document.getElementById("randomNumber");
             var myIronback = document.getElementById("ironbackpix");
             var myOcklepod = document.getElementById("ocklepodpix");
             var myPlundercarb = document.getElementById("plundercrabpix");
             var myRazorfin = document.getElementById("razorfinpix");
-
-            //myButton.addEventListener('click', doSomething, false);
+            var myBlue = document.getElementById("bluepix");
+            var myRed = document.getElementById("redpix");
+            var myReroll = document.getElementById("reroll");
+            
+            // Initialize variables to zero for counting
+            var redWins = 0;
+            var blueWins = 0;
+            var ironbackWins = 0;
+            var ocklepodWins = 0;
+            var plundercrabWins = 0;
+            var razorfinWins = 0;
+            var keepCount = 0;
+            var totalGames = 0;
+            var randomNum = 0;
+            
             myIronback.addEventListener('click', doIronback, false);
             myOcklepod.addEventListener('click', doOcklepod, false);
             myPlundercarb.addEventListener('click', doPlundercrab, false);
             myRazorfin.addEventListener('click', doRazorfin, false);
+            myReroll.addEventListener('click', doReroll, false);
+            myBlue.addEventListener('click', doBlue, false);
+            myRed.addEventListener('click', doRed, false);
             
-
-            //function doSomething() {
-	        //    myText.textContent = "hello, world!";
-            //}
             function doIronback() {
-                myText.textContent = "IRONBACKS";
+                myText.textContent = "IRONBACKS ";
             }
             function doOcklepod() {
                 myText.textContent = "OCKLEPODS";
@@ -86,6 +150,25 @@
             }
             function doRazorfin() {
                 myText.textContent = "RAZORFINS";
+            }
+            function doRed() {
+                myText.textContent = "RED FTW"
+            }
+            function doBlue() {
+                myText.textContent = "BLUE FTW"
+            }
+            
+            function doReroll() {
+                myText.textContent = "REROLLED";
+                keepCount++;
+                myCount.textContent=keepCount;
+                randomNum=randomNumber;
+                randNum.textContent = randomNumber();
+            }
+            
+            // Find a random number between 1 and 10000 to use for finding a game
+            function randomNumber() {
+                return Math.floor(Math.random() * 10000) + 1;
             }
         </script>
     </body>

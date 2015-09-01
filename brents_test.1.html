@@ -10029,18 +10029,22 @@ var resultString = JSON.stringify(result,null,2);
 var obj = JSON.parse(resultString);
 document.getElementById("resultHolder").innerHTML = "<p>Example</p><br>"+resultString +" "+obj[1]["test"];
 
-var myVar=setInterval(function(){myTimer()},835);
 var count = 0;
 var ritoResponse;
 var stringResponse;
+var obj;
+var myVar=setInterval(function(){myTimer()},835);
 
 valueHolder.innerHTML = "{";
 function myTimer() {
 	ritoResponse = httpGet('https://na.api.pvp.net/api/lol/na/v2.2/match/'+data_NA[count]+'?includeTimeline=true&api_key=e9ef32e6-0359-420e-a814-6d71c216bdd6');
-	stringResponse = JSON.stringify(ritoResponse,null,2);
-    valueHolder.innerHTML = valueHolder.innerHTML + ",\"" + count+"\":"+stringResponse;
+	//stringResponse = JSON.stringify(ritoResponse,null,2);
+	obj = JSON.parse(ritoResponse);
+	
+    valueHolder.innerHTML = valueHolder.innerHTML + ",\"" + count+"\":"+obj.teams[0].winner;
+    valueHolder.innerHTML = valueHolder.innerHTML + "}";
     count++;
-    if(count>3)
+    if(count>0)
     {
     	window.clearInterval(myVar);
 		valueHolder.innerHTML = valueHolder.innerHTML+"}";
