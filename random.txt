@@ -15,3 +15,10 @@ Created new main.html with empty functions atm to change backgrounds and other t
 Also changed README in here to be the same as the old one.
 
 When clicking on the minion icon, the fuction do(insert minion) is run. Currently only changes the title at the top of the page
+
+Inclusions:
+How many games Brawler has won
+How many games Brawler has been in
+How many games Red won
+How many games Blue won
+How many Brawlers per games

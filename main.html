@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head>
-        <title>Bilgewater Butts</title>
+        <title>Bilgewater Randoms</title>
         <style type="text/css">
             #mainContent {
 	            font-family: Arial, Helvetica, sans-serif;
 	            font-size: xx-large;
             	font-weight: bold;
-            	background: "Images\deadpool.jpg";
+            	/*background: "deadpool.jpg";*/
             	/*background-color: #E3F0FB;*/
             	border-radius: 4px;
             	padding: 10px;
             	text-align: center;
             }
+            .infoStyle {
+                background-color: #81DAF5;
+            	color: #663300;
+            	height: auto;
+            	width: 402px;
+            	margin: auto;
+            }
             .buttonStyle {
             	border-radius: 4px;
-            	border: thin solid #FF0000;
             	padding: 5px;
             	background-color: #81DAF5;
             	opacity: 50%;
@@ -79,16 +85,27 @@
     </head>
     
     <!-- body of the page -->
-    <body>
+    <body style="background: url('Images/deadpool.jpg'); background-position: center; background-attachment: fixed;">
         <div id="mainContent">
-            <p id="helloText">Bilgewater Butts</p>
-            <p id="countText">0</p>
-            <p id="randomNumber">0</p>
+            <div class="infoStyle">
+                <div id='brawlers'></div>
+                
+                <p id="helloText">Welcome to Bilgewater Randoms<br>Start by CLICKing on the REROLL button below</p>
+                <p id="countText">0</p>
+                <p id="randomNumber"></p>
+                <p id="winNumber"></p>
+                <p id="infoText"></p>
+            </div>
             <!--<button id="clickButton" class="buttonStyle"><img src="Images\ironback.png" alt="Ironback"/></button>-->
             <p>
                 <button id="ironbackpix" class="buttonStyle"><img src="Images\ironback.png" alt="Ironback"/></button>
                 <button id="ocklepodpix" class="buttonStyle"><img src="Images\ocklepod.png" alt="Ocklepod"/></button>
              </p>
+        <div id="mainContent">
+            <p>
+                <button id="reroll" class="buttonRerollStyle"><img src="Images\reroll.jpg" alt="Reroll"/></button>
+            </p>
+        </div>
              <p>
                 <button id="plundercrabpix" class="buttonStyle"><img src="Images\plundercrab.png" alt="Plundercrab"/>
                 <button id="razorfinpix" class="buttonStyle"><img src="Images\razorfin.png" alt="Razorfin"/>
@@ -100,11 +117,7 @@
                 <button id="bluepix" class="buttonNexusStyle"><img src="Images\blueNexus.png" alt="Blue Nexus"/></button>
             </p>
         </div>
-        <div id="mainContent">
-            <p>
-                <button id="reroll" class="buttonRerollStyle"><img src="Images\reroll.jpg" alt="Reroll"/></button>
-            </p>
-        </div>
+
         
         <!-- The following are the scripts used to change things for each minion-->
         <script> 
@@ -119,6 +132,8 @@
             var myBlue = document.getElementById("bluepix");
             var myRed = document.getElementById("redpix");
             var myReroll = document.getElementById("reroll");
+            var info = document.getElementById("infoText");
+            var wins = document.getElementById("winNumber");
             
             // Initialize variables to zero for counting
             var redWins = 0;
@@ -128,7 +143,8 @@
             var plundercrabWins = 0;
             var razorfinWins = 0;
             var keepCount = 0;
-            var totalGames = 0;
+            var math = 0;
+            var win = 0;
             var randomNum = 0;
             
             myIronback.addEventListener('click', doIronback, false);
@@ -140,30 +156,46 @@
             myRed.addEventListener('click', doRed, false);
             
             function doIronback() {
-                myText.textContent = "IRONBACKS ";
+                myText.textContent = "IRONBACKS";
+                win = ironbackWins;
+                math = ironbackWins/keepCount;
+                info.innerText = "WON "+win+" out of "+keepCount+" game(s)\nAverage Number of Ironbacks per Game: "+math;
             }
             function doOcklepod() {
                 myText.textContent = "OCKLEPODS";
+                win = ocklepodWins;
+                math = ocklepodWins/keepCount;
+                info.innerText = "WON "+win+" out of "+keepCount+" game(s)\nAverage Number of Ocklepod per Game: "+math;
             }
             function doPlundercrab() {
                 myText.textContent = "PLUNDERCRABS";
+                win = plundercrabWins;
+                math = plundercrabWins/keepCount;
+                info.innerText = "WON "+win+" out of "+keepCount+" game(s)\nAverage Number of Plundercrab per Game: "+math;
             }
             function doRazorfin() {
                 myText.textContent = "RAZORFINS";
+                win = razorfinWins;
+                math = razorfinWins/keepCount;
+                info.innerText = "WON "+win+" out of "+keepCount+" game(s)\nAverage Number of Razorfin per Game: "+math;
             }
             function doRed() {
                 myText.textContent = "RED FTW"
+                window.scroll(0,0);
+                info.textContent = "Red Team won "+redWins+" out of "+keepCount;
             }
             function doBlue() {
                 myText.textContent = "BLUE FTW"
+                window.scroll(0,0);
+                info.textContent = "Blue Team won "+blueWins+" out of "+keepCount;
             }
             
             function doReroll() {
+                randomNum = randomNumber();
+                get_match_data(randomNum);
                 myText.textContent = "REROLLED";
                 keepCount++;
                 myCount.textContent=keepCount;
-                randomNum=randomNumber;
-                randNum.textContent = randomNumber();
                 window.scroll(0,0);
             } 
             
@@ -10184,16 +10216,59 @@
             1907409686
             ];
             
-            var valueHolder = document.getElementById('valueHolder');
-            var result = {"0":{"test":1},"1":{"test":2},"2":{"test":3}};
-            
             //convert raw JSON object to string
-            var resultString = JSON.stringify(result,null,2);
             
-            //converts string to JSON object, this is what you need to use to convert the result of this page
-            var obj = JSON.parse(resultString);
-            document.getElementById("resultHolder").innerHTML = "<p>Example</p><br>"+resultString +" "+obj[1]["test"];
-
-        </script>
+//loop through JSON to handle data gets the timeline
+function get_match_data(match_index)
+{
+    var ritoResponse = httpGet('https://na.api.pvp.net/api/lol/na/v2.2/match/'+data_NA[match_index]+'?includeTimeline=true&api_key=e9ef32e6-0359-420e-a814-6d71c216bdd6');
+    obj = JSON.parse(ritoResponse);
+    
+    var timeline = obj.timeline;
+    var events = "";
+    var bSideWin = obj.teams[0].winner;
+    if(bSideWin) {
+    	blueWins++;
+    }
+    else {
+    	redWins++;
+    }
+    for(var i = 1; i<timeline.frames.length; i++)
+    {
+    	events = timeline.frames[i].events;
+    	for(var j = 0; j<events.length; j++)
+    	{
+    	    if( (events[j].participantId<6 && bSideWin) || (events[j].participantId>5 && !bSideWin)){
+        	    if(events[j].eventType=="ITEM_PURCHASED" && (events[j].itemId===3611 || events[j].itemId===3612 || events[j].itemId===3613 || events[j].itemId===3614))
+        		{
+        			var brawlerType;
+        			switch(events[j].itemId)
+        			{
+        				case 3611:
+        					brawlerType = "Razorfin";
+        					razorfinWins++;
+        					break;
+        				case 3612:
+        					brawlerType = "Ironback";
+        					ironbackWins++;
+        					break;
+        				case 3613:
+        					brawlerType = "Plundercrab";
+        					plundercrabWins++;
+        					break;
+        				case 3614:
+        					brawlerType = "Ocklepod";
+        					ocklepodWins++;
+        					break;
+        				default:
+        					"undefined";
+        					break;
+        			}
+        		}
+        	}
+    	}
+    }
+}
+</script>
     </body>
 </html>
